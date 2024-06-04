@@ -9,7 +9,9 @@ from django.http import HttpResponse
 def student_api(request):
     if request.method == 'GET':
         json_data=request.body
-        stream=io.ByteIO(json_data)
+        #change in stream
+        stream=io.BytesIO(json_data)
+        #change in pythondata  
         pythondata=JSONParser().parse(stream)
         id=pythondata.get('id',None)
         if id is not None:
@@ -17,3 +19,7 @@ def student_api(request):
             serializer=StudentSerializer(stu)
             json_data=JSONRenderer().render(serializer.data)
             return HttpResponse(json_data,content_type='application/json')
+        stu=Student.object.all()
+        serializer=StudentSerializer(stu,many=True)
+        json_data=JSONRenderer().render(serializer.data)
+        return HttpResponse(json_data,content_type='application/json')

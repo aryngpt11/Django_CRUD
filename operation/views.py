@@ -8,6 +8,7 @@ from django.http import HttpResponse,JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
+#FUNCTION BASED VIEWS
 def student_api(request):
     if request.method == 'GET':
         json_data = request.body
